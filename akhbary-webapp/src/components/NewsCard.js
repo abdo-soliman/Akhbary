@@ -7,7 +7,7 @@ const NewsCard = ({title, author, source, publicationDate, imgUrl, content}) => 
         <div className="card">
             <p className="cardTitle">{title}</p>
             <div className="cardSubTitle">
-                <p className="cardSubTitleText">Author: {author}</p>
+                <p className="cardSubTitleText">Author: {(author) ? author : "unknown"}</p>
                 <a href={source.url} rel="noopener noreferrer" target="_blank"><p className="cardSubTitleText">source: {source.name}</p></a>
             </div>
 

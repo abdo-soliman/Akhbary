@@ -15,7 +15,7 @@
     text-align: left;
     font-size: 30px;
     font-weight: bold;
-    height: 5px;
+    height: fit-content;
 }
 
 .cardSubTitle {
