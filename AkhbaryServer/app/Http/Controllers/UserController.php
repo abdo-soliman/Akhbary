@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\RegistrationPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -52,20 +54,23 @@ class UserController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
+        $name = $request->get('name');
         $email = $request->get('email');
         $password = Str::random(8);
 
         $user = User::create([
-            'name' => $request->get('name'),
+            'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
             'date_of_birth' => $request->get('date_of_birth'),
             'gender' => $request->get('gender'),
         ]);
 
+        // generating JWT Auth token for user
         $token = JWTAuth::fromUser($user);
 
-        // send password to user in an email
+        // emailing registration password to user
+        Mail::to($email)->send(new RegistrationPassword($name, $password));
 
         return response()->json(compact('user', 'token'), 201);
     }
