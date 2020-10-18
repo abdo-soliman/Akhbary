@@ -15,29 +15,26 @@ export default class App extends Component {
         return (
             <Router>
                 <NavBar />
-
                 <div className="container-fluid">
-                    <div className="container">
-                        <Switch>
-                            <Route path="/business">
-                                <BusinessPage />
-                            </Route>
-                            <Route path="/sports">
-                                <SportsPage />
-                            </Route>
+                    <Switch>
+                        <Route path="/business">
+                            <BusinessPage />
+                        </Route>
+                        <Route path="/sports">
+                            <SportsPage />
+                        </Route>
 
-                            <Route path="/login">
-                                <LoginPage />
-                            </Route>
-                            <Route path="/register">
-                                <RegisterPage />
-                            </Route>
+                        <Route path="/login">
+                            <LoginPage />
+                        </Route>
+                        <Route path="/register">
+                            <RegisterPage />
+                        </Route>
 
-                            <Route path="/">
-                                <HomePage />
-                            </Route>
-                        </Switch>
-                    </div>
+                        <Route path="/">
+                            <HomePage />
+                        </Route>
+                    </Switch>
                 </div>
             </Router>
         );
