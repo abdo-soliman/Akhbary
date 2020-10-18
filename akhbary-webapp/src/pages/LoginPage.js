@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../styles/Login.css"
+import "../styles/AuthPage.css";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";

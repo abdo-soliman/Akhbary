@@ -1,0 +1,21 @@
+.inputContainer {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.radio {
+    display: flex;
+    flex: 1;
+    height: 20px;
+}
+
+.radio-label {
+    font-size: 20px;
+    display: flex;
+    flex: 9;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../styles/NewsCard.css"
+import "../styles/NewsCard.css";
 
 const NewsCard = ({title, author, source, publicationDate, imgUrl, content}) => {
     return (
