@@ -1,0 +1,27 @@
+.inputContainer {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    height: 50px;
+    border-radius: 10px;
+    color: black;
+    padding: 10px;
+    font-size: 17px;
+}
+
+.normal {
+    border: 1px solid gray;
+}
+
+.error {
+    border: 1px solid #d40103;
+}
+
+.errorMsg {
+    margin-left: 10px;
+    color: #d40103;
+}
