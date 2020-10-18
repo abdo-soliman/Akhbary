@@ -1,3 +1,4 @@
+import Axios from "axios";
 import moment from "moment";
 
 export const shuffle = (array) => {
@@ -21,4 +22,8 @@ export const shuffle = (array) => {
 export const formatDate = (date) => {
     let d = moment(date);
     return `${d.format("YYYY-MM-DD")}   ${d.format("hh:mm:ss a")}`;
+};
+
+export const axiosAuth = (token) => {
+    Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };

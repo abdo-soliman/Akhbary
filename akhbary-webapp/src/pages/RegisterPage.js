@@ -1,5 +1,11 @@
+import Axios from "axios";
 import moment from "moment";
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
+import env from "../env";
+import apiRoutes from "../core/routes";
+import { axiosAuth } from "../core/utils";
 
 import "../styles/AuthPage.css";
 import Title from "../components/Title";
@@ -11,24 +17,53 @@ export default class RegisterPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: "",
             email: "",
             dateOfBirth: "",
-            gender: "male"
+            gender: "male",
+            redirect: null
         }
     }
 
     register = (event) => {
         event.preventDefault();
-        alert(`email: ${this.state.email}\ndateOfBirth: ${this.state.dateOfBirth}\ngender: ${this.state.gender}`);
+        let data = {
+            name: this.state.name,
+            email: this.state.email,
+            date_of_birth: this.state.dateOfBirth,
+            gender: this.state.gender
+        };
+
+        Axios.post(`${env.api.url}${apiRoutes.auth.register}`, data)
+            .then((response) => {
+                axiosAuth(response.data.token);
+                alert("register was successful an email has been sent to you with your password");
+                this.setState({ redirect: "/" });
+            }).catch((error) => {
+                alert("error!!!");
+                alert(error);
+            });
     }
 
     render() {
+        if (this.state.redirect)
+            return <Redirect to={this.state.redirect} />
+
         return (
             <form onSubmit={this.register} className="form">
                 <Title title="Register" />
 
                 <TextInput
-                    id="dateOfBirth"
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Enter your name here"
+                    value={this.state.name}
+                    onChange={(event) => this.setState({ name: event.target.value })}
+                />
+
+                <TextInput
+                    id="email"
                     name="email"
                     type="email"
                     placeholder="Enter your email here"
@@ -37,8 +72,8 @@ export default class RegisterPage extends Component {
                 />
 
                 <TextInput
-                    id="date_of_birth"
-                    name="date_of_birth"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
                     type="date"
                     placeholder="Date Of Birth"
                     value={this.state.dateOfBirth}

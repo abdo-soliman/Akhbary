@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/NewsCard.css";
 
-const NewsCard = ({title, author, source, publicationDate, imgUrl, content}) => {
+const ArticleCard = ({title, author, source, publicationDate, imgUrl, content}) => {
     return (
         <div className="card">
             <p className="cardTitle">{title}</p>
@@ -21,4 +21,4 @@ const NewsCard = ({title, author, source, publicationDate, imgUrl, content}) => 
     )
 }
 
-export default NewsCard;
+export default ArticleCard;

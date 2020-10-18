@@ -1,4 +1,10 @@
+import Axios from "axios";
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
+import env from "../env";
+import apiRoutes from "../core/routes";
+import { axiosAuth } from "../core/utils";
 
 import "../styles/AuthPage.css";
 import Title from "../components/Title";
@@ -10,18 +16,35 @@ export default class LoginPage extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            redirect: null
         }
     }
 
     login = (event) => {
         event.preventDefault();
-        alert(`email: ${this.state.email}\npassword: ${this.state.password}`);
+        let data = {
+            email: this.state.email,
+            password: this.state.password
+        };
+
+        Axios.post(`${env.api.url}${apiRoutes.auth.login}`, data)
+            .then((response) => {
+                axiosAuth(response.data.token);
+                alert("login was successful");
+                this.setState({ redirect: "/" });
+            }).catch((error) => {
+                alert("error!!!");
+                alert(error);
+            });
     }
 
     render() {
+        if (this.state.redirect)
+            return <Redirect to={this.state.redirect} />
+
         return (
-            <form onSubmit={this.login} className="form">
+            <form onSubmit={this.login} className="form" >
                 <Title title="Login" />
 
                 <TextInput

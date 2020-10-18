@@ -1,11 +1,11 @@
 import Axios from "axios";
 import React, { Component } from "react";
 
-import env from "../env.json";
+import env from "../env";
 import "../styles/NewsPage.css";
-import { shuffle, formatDate } from "../utils";
+import { shuffle, formatDate } from "../core/utils";
 
-import NewsCard from "../components/NewsCard";
+import ArticleCard from "../components/ArticleCard";
 
 export default class BusinessPage extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ export default class BusinessPage extends Component {
                 {
                     this.state.articles.length && this.state.articles.map((article) => {
                         return (
-                            <NewsCard
+                            <ArticleCard
                                 title={article.title}
                                 author={article.author}
                                 source={{ name: article.source.name, url: article.url }}
