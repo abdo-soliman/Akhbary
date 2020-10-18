@@ -1,0 +1,33 @@
+.core {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.flat {
+    background-color: #100047;
+    border: 1px solid #100047;
+}
+
+.outline {
+    background-color: transparent;
+    border: 1px solid #100047;
+}
+
+.text {
+    background-color: transparent;
+    border: none;
+}
+
+.label-core {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.label-flat {
+    color: white;
+}
+
+.label-empty {
+    color: #100047;
+}
