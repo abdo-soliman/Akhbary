@@ -1,8 +1,8 @@
 import Axios from "axios";
 import React, { Component } from "react";
 
-import "../styles/Home.css"
 import env from "../env.json";
+import "../styles/NewsPage.css";
 import { shuffle, formatDate } from "../utils";
 
 import NewsCard from "../components/NewsCard";
@@ -32,7 +32,7 @@ export default class HomePage extends Component {
 
     render() {
         return (
-            <div className="home">
+            <div className="news-container">
                 {
                     this.state.articles.length && this.state.articles.map((article) => {
                         return (
