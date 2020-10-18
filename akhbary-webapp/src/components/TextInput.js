@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/TextInput.css"
 
-const TextInput = ({ id, name, type, placeholder, error }) => {
+const TextInput = ({ id, name, type, placeholder, onChange, value, error }) => {
     return (
         <div className="inputContainer">
             <input
@@ -11,6 +11,8 @@ const TextInput = ({ id, name, type, placeholder, error }) => {
                 type={type}
                 name={name}
                 placeholder={placeholder}
+                value={value}
+                onChange={onChange}
             />
             <p className="errorMsg">{error}</p>
         </div>
