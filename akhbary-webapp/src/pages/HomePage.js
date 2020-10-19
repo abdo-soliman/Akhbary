@@ -4,7 +4,7 @@ import React, { Component } from "react";
 
 import env from "../env";
 import "../styles/NewsPage.css";
-import { shuffle, formatDate } from "../core/utils";
+import { shuffle } from "../core/utils";
 
 import ArticleCard from "../components/ArticleCard";
 
@@ -31,8 +31,20 @@ class HomePage extends Component {
         this.setState({ articles: shuffle(articles) });
     }
 
-    addToFavourites = (url) => {
+    toggleFavourites = (article) => {
+        let favourites = this.props.favourites;
+        if (favourites && favourites.some(item => item.url === article.url))
+            this.props.removeFavourite(article.url);
+        else
+            this.props.addFavourite(article);
+    }
 
+    isFavourite = (articleUrl) => {
+        let favourites = this.props.favourites;
+        if (favourites)
+            return favourites.some(item => item.url === articleUrl);
+        
+        return false;
     }
 
     render() {
@@ -42,14 +54,9 @@ class HomePage extends Component {
                     this.state.articles.length && this.state.articles.map((article) => {
                         return (
                             <ArticleCard
-                                id={article.url}
-                                title={article.title}
-                                author={article.author}
-                                source={{ name: article.source.name, url: article.url }}
-                                publicationDate={formatDate(article.publishedAt)}
-                                imgUrl={article.urlToImage}
-                                content={article.content}
-                                onAddToFavourites={(this.props.loggedIn) ? this.addToFavourites : null}
+                                article={article}
+                                favourite={this.isFavourite(article.url)}
+                                onAddToFavourites={(this.props.loggedIn) ? this.toggleFavourites : null}
                             />
                         );
                     })
@@ -61,8 +68,26 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loggedIn: state.Auth.loggedIn
+        loggedIn: state.Auth.loggedIn,
+        favourites: state.Favourites.favourites
     };
 }
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addFavourite: (article) => {
+            dispatch({
+                type: "ADD_FAVOURITE",
+                payload: article,
+            });
+        },
+        removeFavourite: (articleUrl) => {
+            dispatch({
+                type: "REMOVE_FAVOURITE",
+                payload: articleUrl,
+            });
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -1,15 +1,12 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as HeartSolid } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as HeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from "./Button";
 import "../styles/ArticleCard.css";
 import { formatDate } from "../core/utils";
 
-const ArticleCard = ({article, favourite, onAddToFavourites}) => {
-    const [favorite, setFavorite] = React.useState(favourite);
-
+const FavouriteCard = ({article, onRemoveFavorite}) => {
     return (
         <div key={article.url} className="card">
             <p className="cardTitle">{article.title}</p>
@@ -25,24 +22,19 @@ const ArticleCard = ({article, favourite, onAddToFavourites}) => {
                 <p className="articleContent">{article.content}</p>
             </div>
 
-            {onAddToFavourites &&
-                <div className="faBtnContainer">
-                    <div className="space" />
-                    <Button
-                        mode="text"
-                        type="button"
-                        onClick={() => {
-                            setFavorite(!favorite);
-                            onAddToFavourites(article);
-                        }}
-                        customClass="iconBtn"
-                    >
-                        <FontAwesomeIcon className="icon" icon={(favorite) ? HeartSolid : HeartEmpty} size="3x" color="#d40103" />
-                    </Button>
-                </div>
-            }
+            <div className="faBtnContainer">
+                <div className="space" />
+                <Button
+                    mode="text"
+                    type="button"
+                    onClick={() => onRemoveFavorite(article.url)}
+                    customClass="iconBtn"
+                >
+                    <FontAwesomeIcon className="icon" icon={faTrash} size="3x" color="#d40103" />
+                </Button>
+            </div>
         </div>
     )
 }
 
-export default ArticleCard;
+export default FavouriteCard;

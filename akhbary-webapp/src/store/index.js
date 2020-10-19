@@ -4,6 +4,9 @@ import AllReducers from "./reducers/AllReducers";
 const initialStates = {
     Auth: {
         loggedIn: false
+    },
+    Favourites: {
+        favourites: []
     }
 };
 
