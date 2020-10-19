@@ -1,14 +1,18 @@
 # Akhbary Web App
-This is the frontend web app of akhbary. It's built using React, React Router, and Redux
+This is the frontend web app of akhbary. It's built using React, React Router, and Redux.
+
+## Prerequisites
+1. [Node.Js](https://nodejs.org/en/download/)
+2. [Yarn (optional)](https://yarnpkg.com/getting-started/install)
 
 ## Build
 
 To build this project you will need to follow the following steps:
-1. Install packages
+1. Install Packages
 2. Configure Environment
 3. Run The App
 
-### `Install packages`
+### `Install Packages`
 
 To build this project we first start by installing its dependancies. To install the dependancies use either of the following command based on package manager you prefer.
 ```bash
