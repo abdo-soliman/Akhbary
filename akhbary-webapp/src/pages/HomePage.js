@@ -46,8 +46,6 @@ class HomePage extends Component {
             content: article.content
         };
 
-        console.log(data);
-
         Axios.post(`${env.api.url}${apiRoutes.favourites.add}`, data)
             .then((response) => {
                 article.id = response.data.favourite.id;

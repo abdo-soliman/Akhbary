@@ -1,8 +1,11 @@
+import Axios from "axios";
 import { connect } from 'react-redux';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import env from "./env";
 import "./styles/App.css";
+import apiRoutes from "./core/routes";
 
 import NavBar from "./components/NavBar";
 
@@ -15,6 +18,28 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
 class App extends Component {
+    componentDidMount() {
+        if (this.props.loggedIn) {
+            Axios.get(`${env.api.url}${apiRoutes.favourites.get}`)
+                .then((response) => this.props.setFavourites(response.data.data))
+                .catch((error) => {
+                    alert("error!!!");
+                    alert(error);
+                });
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.loggedIn) {
+            Axios.get(`${env.api.url}${apiRoutes.favourites.get}`)
+                .then((response) => this.props.setFavourites(response.data.data))
+                .catch((error) => {
+                    alert("error!!!");
+                    alert(error);
+                });
+        }
+    }
+
     render() {
         return (
             <Router>
@@ -61,4 +86,15 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setFavourites: (articles) => {
+            dispatch({
+                type: "SET_FAVOURITES",
+                payload: articles,
+            });
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

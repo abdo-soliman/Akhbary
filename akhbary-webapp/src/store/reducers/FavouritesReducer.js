@@ -1,5 +1,11 @@
 const FavouritesReducer = (state = {}, actions) => {
     switch (actions.type) {
+        case "SET_FAVOURITES":
+            return {
+                ...state,
+                favourites: actions.payload
+            };
+
         case "ADD_FAVOURITE":
             let af = state.favourites;
             af.push(actions.payload);

@@ -1,12 +1,21 @@
+import Axios from "axios";
 import { connect } from 'react-redux';
 import React, { Component } from "react";
 
+import env from "../env";
 import "../styles/NewsPage.css";
+import apiRoutes from "../core/routes";
+
 import FavouriteCard from "../components/FavouriteCard";
 
 class FavouritesPage extends Component {
-    removeFavourite = (articleUrl) => {
-        this.props.removeFavourite(articleUrl);
+    removeFavourite = (articleId) => {
+        Axios.delete(`${env.api.url}${apiRoutes.favourites.delete}/${articleId}`)
+            .then(() => this.props.removeFavourite(articleId))
+            .catch((error) => {
+                alert("error!!!");
+                alert(error);
+            });
     }
 
     render() {
@@ -37,10 +46,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removeFavourite: (articleUrl) => {
+        removeFavourite: (articleId) => {
             dispatch({
                 type: "REMOVE_FAVOURITE",
-                payload: articleUrl,
+                payload: articleId,
             });
         },
     };

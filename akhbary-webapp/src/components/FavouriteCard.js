@@ -27,7 +27,7 @@ const FavouriteCard = ({article, onRemoveFavorite}) => {
                 <Button
                     mode="text"
                     type="button"
-                    onClick={() => onRemoveFavorite(article.url)}
+                    onClick={() => onRemoveFavorite(article.id)}
                     customClass="iconBtn"
                 >
                     <FontAwesomeIcon className="icon" icon={faTrash} size="3x" color="#d40103" />
