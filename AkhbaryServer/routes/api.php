@@ -18,4 +18,8 @@ Route::post('login', 'App\Http\Controllers\UserController@login');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user', 'App\Http\Controllers\UserController@getAuthenticatedUser');
+
+    Route::get('favourites', 'App\Http\Controllers\FavouriteController@index');
+    Route::post('favourite', 'App\Http\Controllers\FavouriteController@store');
+    Route::delete('favourite/{id}', 'App\Http\Controllers\FavouriteController@destroy');
 });
