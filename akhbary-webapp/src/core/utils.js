@@ -23,7 +23,7 @@ export const nameValidator = (name) => {
     if (!name || name.length < 6)
         return "Full Name must be at least 6 chracters.";
 
-    return "";
+    return null;
 };
 
 export const emailValidator = (email) => {
@@ -32,14 +32,21 @@ export const emailValidator = (email) => {
     if (!email || email.length <= 0) return "Email cannot be empty.";
     if (!re.test(email)) return "Ooops! We need a valid email address.";
 
-    return "";
+    return null;
 };
 
 export const passwordValidator = (password) => {
     if (!password || password.length < 8)
         return "Password must be at least 8 chracters.";
 
-    return "";
+    return null;
+};
+
+export const genderValidator = (gender) => {
+    if (gender === "male" || gender === "female" || gender === "others")
+        return null;
+
+    return "Invalid Gender must be male, female or others";
 };
 
 export const formatDate = (date) => {

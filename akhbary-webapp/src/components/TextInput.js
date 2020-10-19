@@ -2,9 +2,9 @@ import React from "react";
 
 import "../styles/TextInput.css";
 
-const TextInput = ({ id, name, type, placeholder, onChange, value, error }) => {
+const TextInput = ({ id, name, type, placeholder, value, onChange, onBlur, error }) => {
     return (
-        <div className="inputContainer">
+        <div className="TextInputContainer">
             <input
                 id={id}
                 className={`input ${(error) ? "error" : "normal"}`}
@@ -13,8 +13,11 @@ const TextInput = ({ id, name, type, placeholder, onChange, value, error }) => {
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
             />
-            <p className="errorMsg">{error}</p>
+            {error &&
+                <p className="errorMsg">{error}</p>
+            }
         </div>
     )
 }

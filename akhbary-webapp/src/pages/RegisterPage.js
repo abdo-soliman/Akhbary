@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import env from "../env";
 import apiRoutes from "../core/routes";
-import { axiosAuth } from "../core/utils";
+import { axiosAuth, nameValidator, emailValidator, genderValidator } from "../core/utils";
 
 import "../styles/AuthPage.css";
 import Alert from "../components/Alert";
@@ -23,6 +23,9 @@ export default class RegisterPage extends Component {
             dateOfBirth: "",
             gender: "male",
             redirect: null,
+            nameError: null,
+            emailError: null,
+            genderError: null,
             alertVisible: false,
             alertTitle: "Error",
             alertContent: ""
@@ -37,6 +40,20 @@ export default class RegisterPage extends Component {
             date_of_birth: this.state.dateOfBirth,
             gender: this.state.gender
         };
+
+        let nameError = nameValidator(this.state.name);
+        let emailError = emailValidator(this.state.email);
+        let genderError = genderValidator(this.state.gender);
+
+        if (nameError || emailError) {
+            this.setState({ nameError: nameError, emailError: emailError });
+            return;
+        }
+
+        if (genderError) {
+            this.setState({ alertContent: genderError, alertVisible: true });
+            return;
+        }
 
         Axios.post(`${env.api.url}${apiRoutes.auth.register}`, data)
             .then((response) => {
@@ -69,8 +86,9 @@ export default class RegisterPage extends Component {
                     name="name"
                     type="text"
                     placeholder="Enter your name here"
-                    value={this.state.name}
                     onChange={(event) => this.setState({ name: event.target.value })}
+                    value={this.state.name}
+                    onBlur={() => this.setState({ nameError: nameValidator(this.state.name) })}
                 />
 
                 <TextInput
@@ -78,8 +96,9 @@ export default class RegisterPage extends Component {
                     name="email"
                     type="email"
                     placeholder="Enter your email here"
-                    value={this.state.email}
                     onChange={(event) => this.setState({ email: event.target.value })}
+                    value={this.state.email}
+                    onBlur={() => this.setState({ emailError: emailValidator(this.state.email) })}
                 />
 
                 <TextInput

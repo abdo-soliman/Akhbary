@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import env from "../env";
 import apiRoutes from "../core/routes";
-import { axiosAuth } from "../core/utils";
+import { axiosAuth, emailValidator, passwordValidator } from "../core/utils";
 
 import "../styles/AuthPage.css";
 import Alert from "../components/Alert";
@@ -20,6 +20,8 @@ class LoginPage extends Component {
             email: "",
             password: "",
             redirect: null,
+            emailError: null,
+            passwordError: null,
             alertVisible: false,
             alertTitle: "Error",
             alertContent: ""
@@ -28,6 +30,15 @@ class LoginPage extends Component {
 
     login = (event) => {
         event.preventDefault();
+
+        let emailError = emailValidator(this.state.email);
+        let passwordError = passwordValidator(this.state.password);
+
+        if (emailError || passwordError) {
+            this.setState({ emailError: emailError, passwordError: passwordError });
+            return;
+        }
+
         let data = {
             email: this.state.email,
             password: this.state.password
@@ -67,6 +78,8 @@ class LoginPage extends Component {
                     placeholder="Enter your email here"
                     value={this.state.email}
                     onChange={(event) => this.setState({ email: event.target.value })}
+                    onBlur={() => this.setState({ emailError: emailValidator(this.state.email) })}
+                    error={this.state.emailError}
                 />
 
                 <TextInput
@@ -76,6 +89,8 @@ class LoginPage extends Component {
                     placeholder="Enter your password here"
                     value={this.state.password}
                     onChange={(event) => this.setState({ password: event.target.value })}
+                    onBlur={() => this.setState({ passwordError: passwordValidator(this.state.password) })}
+                    error={this.state.passwordError}
                 />
 
                 <Button mode="flat" type="submit" label="Login" />
