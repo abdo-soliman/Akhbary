@@ -32,8 +32,9 @@ class LoginPage extends Component {
         Axios.post(`${env.api.url}${apiRoutes.auth.login}`, data)
             .then((response) => {
                 axiosAuth(response.data.token);
-                this.props.setLogin();
-                this.setState({ redirect: "/" });
+                this.setState({ redirect: "/home" }, () => {
+                    this.props.setLogin();
+                });
             }).catch((error) => {
                 alert("error!!!");
                 alert(error);

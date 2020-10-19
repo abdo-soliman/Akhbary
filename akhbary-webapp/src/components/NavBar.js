@@ -103,6 +103,15 @@ class NavBar extends Component {
                             </Link>
                         );
                     })}
+                    {this.props.loggedIn &&
+                        <Link
+                            key={6}
+                            className={"link"}
+                            to="/favourites"
+                        >
+                            Favourites
+                        </Link>
+                    }
                 </div>
 
                 <div className="right-tabs">

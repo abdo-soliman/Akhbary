@@ -8,6 +8,8 @@ import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
 import BusinessPage from "./pages/BusinessPage";
 import SportsPage from "./pages/SportsPage";
+import FavouritesPage from "./pages/FavouritesPage";
+
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -24,6 +26,12 @@ class App extends Component {
                         <Route path="/sports">
                             <SportsPage />
                         </Route>
+
+                        {this.props.loggedIn &&
+                            <Route path="/favourites">
+                                <FavouritesPage />
+                            </Route>
+                        }
 
                         {!this.props.loggedIn &&
                             <Route path="/login">
