@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { connect } from 'react-redux';
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
@@ -11,7 +12,7 @@ import Title from "../components/Title";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +32,7 @@ export default class LoginPage extends Component {
         Axios.post(`${env.api.url}${apiRoutes.auth.login}`, data)
             .then((response) => {
                 axiosAuth(response.data.token);
-                alert("login was successful");
+                this.props.setLogin();
                 this.setState({ redirect: "/" });
             }).catch((error) => {
                 alert("error!!!");
@@ -70,3 +71,15 @@ export default class LoginPage extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLogin: () => {
+            dispatch({
+                type: "SET_USER_LOGIN"
+            });
+        },
+    };
+};
+
+export default connect(null, mapDispatchToProps)(LoginPage);

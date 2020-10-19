@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./styles/App.css";
@@ -10,7 +11,7 @@ import SportsPage from "./pages/SportsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
-export default class App extends Component {
+class App extends Component {
     render() {
         return (
             <Router>
@@ -24,12 +25,16 @@ export default class App extends Component {
                             <SportsPage />
                         </Route>
 
-                        <Route path="/login">
-                            <LoginPage />
-                        </Route>
-                        <Route path="/register">
-                            <RegisterPage />
-                        </Route>
+                        {!this.props.loggedIn &&
+                            <Route path="/login">
+                                <LoginPage />
+                            </Route>
+                        }
+                        {!this.props.loggedIn &&
+                            <Route path="/register">
+                                <RegisterPage />
+                            </Route>
+                        }
 
                         <Route path="/">
                             <HomePage />
@@ -40,3 +45,11 @@ export default class App extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loggedIn: state.Auth.loggedIn
+    };
+}
+
+export default connect(mapStateToProps)(App);

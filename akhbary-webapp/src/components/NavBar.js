@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
 import "../styles/NavBar.css";
+import { axiosAuth } from "../core/utils";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,20 +106,56 @@ export default class NavBar extends Component {
                 </div>
 
                 <div className="right-tabs">
-                    {this.state.rightTabs.length && this.state.rightTabs.map((tab) => {
-                        return (
-                            <Link
-                                key={tab.id}
-                                onClick={() => this.navigateRight(tab.id)}
-                                className={`link ${(tab.active) ? "active" : ""}`}
-                                to={tab.url}
-                            >
-                                {tab.name}
-                            </Link>
-                        );
-                    })}
+                    {
+                        !this.props.loggedIn &&
+                        this.state.rightTabs.length &&
+                        this.state.rightTabs.map((tab) => {
+                            return (
+                                <Link
+                                    key={tab.id}
+                                    onClick={() => this.navigateRight(tab.id)}
+                                    className={`link ${(tab.active) ? "active" : ""}`}
+                                    to={tab.url}
+                                >
+                                    {tab.name}
+                                </Link>
+                            );
+                        })
+                    }
+
+                    {this.props.loggedIn &&
+                        <Link
+                            key={10}
+                            onClick={() => {
+                                axiosAuth(null);
+                                this.props.setLogout();
+                            }}
+                            className={"link"}
+                            to="/"
+                        >
+                            Logout
+                        </Link>
+                    }
                 </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loggedIn: state.Auth.loggedIn
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLogout: () => {
+            dispatch({
+                type: "SET_USER_LOGOUT"
+            });
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

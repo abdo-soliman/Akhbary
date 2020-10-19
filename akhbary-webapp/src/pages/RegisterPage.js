@@ -38,7 +38,7 @@ export default class RegisterPage extends Component {
             .then((response) => {
                 axiosAuth(response.data.token);
                 alert("register was successful an email has been sent to you with your password");
-                this.setState({ redirect: "/" });
+                this.setState({ redirect: "/login" });
             }).catch((error) => {
                 alert("error!!!");
                 alert(error);
