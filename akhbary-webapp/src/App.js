@@ -1,13 +1,14 @@
-import React, { Component } from "react";
 import { connect } from 'react-redux';
+import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./styles/App.css";
 
 import NavBar from "./components/NavBar";
+
 import HomePage from "./pages/HomePage";
-import BusinessPage from "./pages/BusinessPage";
 import SportsPage from "./pages/SportsPage";
+import BusinessPage from "./pages/BusinessPage";
 import FavouritesPage from "./pages/FavouritesPage";
 
 import LoginPage from "./pages/LoginPage";

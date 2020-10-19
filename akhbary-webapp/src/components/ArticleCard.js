@@ -1,10 +1,16 @@
-import React from "react";
+import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as HeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as HeartEmpty } from '@fortawesome/free-regular-svg-icons';
 
-import "../styles/NewsCard.css";
+import Button from "./Button";
+import "../styles/ArticleCard.css";
 
-const ArticleCard = ({title, author, source, publicationDate, imgUrl, content}) => {
+const ArticleCard = ({id, title, author, source, publicationDate, imgUrl, content, onAddToFavourites}) => {
+    const [favorite, setFavorite] = React.useState(false);
+
     return (
-        <div className="card">
+        <div key={id} className="card">
             <p className="cardTitle">{title}</p>
             <div className="cardSubTitle">
                 <p className="cardSubTitleText">Author: {(author) ? author : "unknown"}</p>
@@ -17,6 +23,23 @@ const ArticleCard = ({title, author, source, publicationDate, imgUrl, content}) 
                 <img className="artcileImg" src={imgUrl} alt="article" />
                 <p className="articleContent">{content}</p>
             </div>
+
+            {onAddToFavourites &&
+                <div className="faBtnContainer">
+                    <div className="space" />
+                    <Button
+                        mode="text"
+                        type="button"
+                        onClick={() => {
+                            setFavorite(!favorite);
+                            onAddToFavourites(id);
+                        }}
+                        customClass="iconBtn"
+                    >
+                        <FontAwesomeIcon className="icon" icon={(favorite) ? HeartSolid : HeartEmpty} size="3x" color="#d40103" />
+                    </Button>
+                </div>
+            }
         </div>
     )
 }

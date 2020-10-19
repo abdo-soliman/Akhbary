@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { connect } from 'react-redux';
 import React, { Component } from "react";
 
 import env from "../env";
@@ -7,7 +8,7 @@ import { shuffle, formatDate } from "../core/utils";
 
 import ArticleCard from "../components/ArticleCard";
 
-export default class SportsPage extends Component {
+class SportsPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -25,6 +26,10 @@ export default class SportsPage extends Component {
         this.setState({ articles: shuffle(articles) });
     }
 
+    addToFavourites = (url) => {
+
+    }
+
     render() {
         return (
             <div className="news-container">
@@ -32,12 +37,14 @@ export default class SportsPage extends Component {
                     this.state.articles.length && this.state.articles.map((article) => {
                         return (
                             <ArticleCard
+                                id={article.url}
                                 title={article.title}
                                 author={article.author}
                                 source={{ name: article.source.name, url: article.url }}
                                 publicationDate={formatDate(article.publishedAt)}
                                 imgUrl={article.urlToImage}
                                 content={article.content}
+                                onAddToFavourites={(this.props.loggedIn) ? this.addToFavourites : null}
                             />
                         );
                     })
@@ -46,3 +53,11 @@ export default class SportsPage extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loggedIn: state.Auth.loggedIn
+    };
+}
+
+export default connect(mapStateToProps)(SportsPage);
