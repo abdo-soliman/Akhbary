@@ -46,44 +46,6 @@ class NavBar extends Component {
         }
     }
 
-    navigateLeft = (tabId) => {
-        let leftTabs = this.state.leftTabs;
-        for (let i = 0; i < leftTabs.length; i++) {
-            if (leftTabs[i].active)
-                leftTabs[i].active = false;
-
-            if (leftTabs[i].id === tabId)
-                leftTabs[i].active = true;
-        }
-
-        let rightTabs = this.state.rightTabs;
-        for (let i = 0; i < rightTabs.length; i++) {
-            if (rightTabs[i].active)
-                rightTabs[i].active = false;
-        }
-
-        this.setState({ leftTabs: leftTabs, rightTabs: rightTabs });
-    };
-
-    navigateRight = (tabId) => {
-        let rightTabs = this.state.rightTabs;
-        for (let i = 0; i < rightTabs.length; i++) {
-            if (rightTabs[i].active)
-                rightTabs[i].active = false;
-
-            if (rightTabs[i].id === tabId)
-                rightTabs[i].active = true;
-        }
-
-        let leftTabs = this.state.leftTabs;
-        for (let i = 0; i < leftTabs.length; i++) {
-            if (leftTabs[i].active)
-                leftTabs[i].active = false;
-        }
-
-        this.setState({ leftTabs: leftTabs, rightTabs: rightTabs });
-    };
-
     render() {
         return (
             <div className="topnav">
@@ -95,8 +57,7 @@ class NavBar extends Component {
                         return (
                             <Link
                                 key={tab.id}
-                                onClick={() => this.navigateLeft(tab.id)}
-                                className={`link ${(tab.active) ? "active" : ""}`}
+                                className="link"
                                 to={tab.url}
                             >
                                 {tab.name}
@@ -122,8 +83,7 @@ class NavBar extends Component {
                             return (
                                 <Link
                                     key={tab.id}
-                                    onClick={() => this.navigateRight(tab.id)}
-                                    className={`link ${(tab.active) ? "active" : ""}`}
+                                    className="link"
                                     to={tab.url}
                                 >
                                     {tab.name}

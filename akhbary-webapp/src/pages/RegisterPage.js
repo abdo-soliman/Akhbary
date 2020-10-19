@@ -58,7 +58,6 @@ export default class RegisterPage extends Component {
         Axios.post(`${env.api.url}${apiRoutes.auth.register}`, data)
             .then((response) => {
                 axiosAuth(response.data.token);
-                alert("register was successful an email has been sent to you with your password");
                 this.setState({ redirect: "/login" });
             }).catch((error) => {
                 this.setState({ alertVisible: true, alertContent: error });
