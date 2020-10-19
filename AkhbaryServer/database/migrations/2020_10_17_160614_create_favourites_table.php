@@ -18,9 +18,9 @@ class CreateFavouritesTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('author_name')->nullable();
-            $table->string('image_url');
+            $table->text('image_url');
             $table->string('source_name');
-            $table->string('source_url');
+            $table->text('source_url');
             $table->dateTime('published_at');
             $table->text('content')->nullable();
             $table->timestamps();

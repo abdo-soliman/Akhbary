@@ -10,7 +10,7 @@ const FavouritesReducer = (state = {}, actions) => {
 
         case "REMOVE_FAVOURITE":
             let rf = state.favourites;
-            rf = rf.filter(item => item.url !== actions.payload);
+            rf = rf.filter(item => item.id !== actions.payload);
             return {
                 ...state,
                 favourites: rf

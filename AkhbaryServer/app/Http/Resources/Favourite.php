@@ -19,7 +19,7 @@ class Favourite extends JsonResource
             'title' => $this->title,
             'author' => $this->author_name,
             'url' => $this->source_url,
-            'source' => $this->source_name,
+            'source' => array("name" => $this->source_name),
             'publishedAt' => $this->published_at,
             'urlToImage' => $this->image_url,
             'content' => $this->content

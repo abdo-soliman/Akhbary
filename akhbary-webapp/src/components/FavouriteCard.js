@@ -8,7 +8,7 @@ import { formatDate } from "../core/utils";
 
 const FavouriteCard = ({article, onRemoveFavorite}) => {
     return (
-        <div key={article.url} className="card">
+        <div key={article.id} className="card">
             <p className="cardTitle">{article.title}</p>
             <div className="cardSubTitle">
                 <p className="cardSubTitleText">Author: {(article.author) ? article.author : "unknown"}</p>

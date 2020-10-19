@@ -1,9 +1,11 @@
 import Axios from "axios";
+import moment from "moment";
 import { connect } from 'react-redux';
 import React, { Component } from "react";
 
 import env from "../env";
 import "../styles/NewsPage.css";
+import apiRoutes from "../core/routes";
 import { shuffle } from "../core/utils";
 
 import ArticleCard from "../components/ArticleCard";
@@ -26,12 +28,45 @@ class BusinessPage extends Component {
         this.setState({ articles: shuffle(articles) });
     }
 
+    _addFavourite = (article) => {
+        let d = moment(article.publishedAt);
+
+        let data = {
+            title: article.title,
+            author_name: article.author,
+            image_url: article.urlToImage,
+            source_name: article.source.name,
+            source_url: article.url,
+            published_at: `${d.format("YYYY-MM-DD")} ${d.format("HH:mm:ss")}`,
+            content: article.content
+        };
+
+        Axios.post(`${env.api.url}${apiRoutes.favourites.add}`, data)
+            .then((response) => {
+                article.id = response.data.favourite.id;
+                this.props.addFavourite(article);
+            })
+            .catch((error) => {
+                alert("error!!!");
+                alert(error);
+            });
+    }
+
+    _removeFavourite = (articleId) => {
+        Axios.delete(`${env.api.url}${apiRoutes.favourites.delete}/${articleId}`)
+            .then(() => this.props.removeFavourite(articleId))
+            .catch((error) => {
+                alert("error!!!");
+                alert(error);
+            });
+    }
+
     toggleFavourites = (article) => {
         let favourites = this.props.favourites;
         if (favourites && favourites.some(item => item.url === article.url))
-            this.props.removeFavourite(article.url);
+            this._removeFavourite(article.id);
         else
-            this.props.addFavourite(article);
+            this._addFavourite(article);
     }
 
     isFavourite = (articleUrl) => {
@@ -76,10 +111,10 @@ const mapDispatchToProps = (dispatch) => {
                 payload: article,
             });
         },
-        removeFavourite: (articleUrl) => {
+        removeFavourite: (articleId) => {
             dispatch({
                 type: "REMOVE_FAVOURITE",
-                payload: articleUrl,
+                payload: articleId,
             });
         },
     };
