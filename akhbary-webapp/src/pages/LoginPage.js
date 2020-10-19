@@ -8,6 +8,7 @@ import apiRoutes from "../core/routes";
 import { axiosAuth } from "../core/utils";
 
 import "../styles/AuthPage.css";
+import Alert from "../components/Alert";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
@@ -18,7 +19,10 @@ class LoginPage extends Component {
         this.state = {
             email: "",
             password: "",
-            redirect: null
+            redirect: null,
+            alertVisible: false,
+            alertTitle: "Error",
+            alertContent: ""
         }
     }
 
@@ -36,8 +40,7 @@ class LoginPage extends Component {
                     this.props.setLogin();
                 });
             }).catch((error) => {
-                alert("error!!!");
-                alert(error);
+                this.setState({ alertVisible: true, alertContent: error });
             });
     }
 
@@ -46,7 +49,15 @@ class LoginPage extends Component {
             return <Redirect to={this.state.redirect} />
 
         return (
-            <form onSubmit={this.login} className="form" >
+            <form onSubmit={this.login} className="form">
+                {this.state.alertVisible &&
+                    <Alert
+                        title={this.state.alertTitle}
+                        content={this.state.alertContent}
+                        onOkClick={() => this.setState({ alertVisible: false })}
+                    />
+                }
+
                 <Title title="Login" />
 
                 <TextInput

@@ -8,13 +8,17 @@ import "../styles/NewsPage.css";
 import apiRoutes from "../core/routes";
 import { shuffle } from "../core/utils";
 
+import Alert from "../components/Alert";
 import ArticleCard from "../components/ArticleCard";
 
 class SportsPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            articles: []
+            articles: [],
+            alertVisible: false,
+            alertTitle: "Error",
+            alertContent: ""
         };
     }
 
@@ -44,11 +48,13 @@ class SportsPage extends Component {
         Axios.post(`${env.api.url}${apiRoutes.favourites.add}`, data)
             .then((response) => {
                 article.id = response.data.favourite.id;
-                this.props.addFavourite(article);
+                let newArticles = this.state.articles.filter(item => item.url !== article.url);
+                this.setState({ articles: newArticles }, () => {
+                    this.props.addFavourite(article);
+                });
             })
             .catch((error) => {
-                alert("error!!!");
-                alert(error);
+                this.setState({ alertVisible: true, alertContent: error });
             });
     }
 
@@ -56,8 +62,7 @@ class SportsPage extends Component {
         Axios.delete(`${env.api.url}${apiRoutes.favourites.delete}/${articleId}`)
             .then(() => this.props.removeFavourite(articleId))
             .catch((error) => {
-                alert("error!!!");
-                alert(error);
+                this.setState({ alertVisible: true, alertContent: error });
             });
     }
 
@@ -80,6 +85,14 @@ class SportsPage extends Component {
     render() {
         return (
             <div className="news-container">
+                {this.state.alertVisible &&
+                    <Alert
+                        title={this.state.alertTitle}
+                        content={this.state.alertContent}
+                        onOkClick={() => this.setState({ alertVisible: false })}
+                    />
+                }
+
                 {
                     this.state.articles.length && this.state.articles.map((article) => {
                         return (

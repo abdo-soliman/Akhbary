@@ -19,6 +19,29 @@ export const shuffle = (array) => {
     return array;
 };
 
+export const nameValidator = (name) => {
+    if (!name || name.length < 6)
+        return "Full Name must be at least 6 chracters.";
+
+    return "";
+};
+
+export const emailValidator = (email) => {
+    const re = /\S+@\S+\.\S+/;
+
+    if (!email || email.length <= 0) return "Email cannot be empty.";
+    if (!re.test(email)) return "Ooops! We need a valid email address.";
+
+    return "";
+};
+
+export const passwordValidator = (password) => {
+    if (!password || password.length < 8)
+        return "Password must be at least 8 chracters.";
+
+    return "";
+};
+
 export const formatDate = (date) => {
     let d = moment(date);
     return `${d.format("YYYY-MM-DD")}   ${d.format("hh:mm:ss a")}`;

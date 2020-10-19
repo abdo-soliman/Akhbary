@@ -6,21 +6,38 @@ import env from "../env";
 import "../styles/NewsPage.css";
 import apiRoutes from "../core/routes";
 
+import Alert from "../components/Alert";
 import FavouriteCard from "../components/FavouriteCard";
 
 class FavouritesPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            alertVisible: false,
+            alertTitle: "Error",
+            alertContent: ""
+        };
+    }
+
     removeFavourite = (articleId) => {
         Axios.delete(`${env.api.url}${apiRoutes.favourites.delete}/${articleId}`)
             .then(() => this.props.removeFavourite(articleId))
             .catch((error) => {
-                alert("error!!!");
-                alert(error);
+                this.setState({ alertVisible: true, alertContent: error });
             });
     }
 
     render() {
         return (
             <div className="news-container">
+                {this.state.alertVisible &&
+                    <Alert
+                        title={this.state.alertTitle}
+                        content={this.state.alertContent}
+                        onOkClick={() => this.setState({ alertVisible: false })}
+                    />
+                }
+
                 {
                     this.props.favourites &&
                     this.props.favourites.length &&

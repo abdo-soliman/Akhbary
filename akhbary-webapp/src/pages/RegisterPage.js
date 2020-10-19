@@ -8,6 +8,7 @@ import apiRoutes from "../core/routes";
 import { axiosAuth } from "../core/utils";
 
 import "../styles/AuthPage.css";
+import Alert from "../components/Alert";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
@@ -21,7 +22,10 @@ export default class RegisterPage extends Component {
             email: "",
             dateOfBirth: "",
             gender: "male",
-            redirect: null
+            redirect: null,
+            alertVisible: false,
+            alertTitle: "Error",
+            alertContent: ""
         }
     }
 
@@ -40,8 +44,7 @@ export default class RegisterPage extends Component {
                 alert("register was successful an email has been sent to you with your password");
                 this.setState({ redirect: "/login" });
             }).catch((error) => {
-                alert("error!!!");
-                alert(error);
+                this.setState({ alertVisible: true, alertContent: error });
             });
     }
 
@@ -51,6 +54,14 @@ export default class RegisterPage extends Component {
 
         return (
             <form onSubmit={this.register} className="form">
+                {this.state.alertVisible &&
+                    <Alert
+                        title={this.state.alertTitle}
+                        content={this.state.alertContent}
+                        onOkClick={() => this.setState({ alertVisible: false })}
+                    />
+                }
+
                 <Title title="Register" />
 
                 <TextInput
